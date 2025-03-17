@@ -1,5 +1,4 @@
 import { GetWorkflowsForUser } from '@/actions/workflows/getWorkflowsForUser'
-import { waitFor } from '@/components/helper/waitFor'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Skeleton } from '@/components/ui/skeleton'
 import { AlertCircle, InboxIcon } from 'lucide-react'
