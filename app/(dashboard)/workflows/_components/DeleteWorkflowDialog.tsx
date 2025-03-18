@@ -70,7 +70,7 @@ function DeleteWorkflowDialog({
 						className='bg-destructive text-destructive-foreground hover:bg-destructive/90'
 						onClick={(e) => {
 							e.stopPropagation()
-							toast.loading('Deleting workflow...'), { id: workflowId }
+							toast.loading('Deleting workflow...', { id: workflowId })
 							deleteMutation.mutate(workflowId)
 						}}>
 						Delete
