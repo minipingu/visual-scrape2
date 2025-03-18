@@ -62,7 +62,12 @@ function DeleteWorkflowDialog({
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
-					<AlertDialogCancel>Cancel</AlertDialogCancel>
+					<AlertDialogCancel
+						onClick={() => {
+							setConfirmText('')
+						}}>
+						Cancel
+					</AlertDialogCancel>
 					<AlertDialogAction
 						disabled={
 							confirmText !== workflowName || deleteMutation.isPending
