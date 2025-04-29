@@ -18,6 +18,5 @@ export const LaunchBrowserTask = {
 			hideHandle: true,
 		},
 	],
+	outputs: [{ name: 'Web page', type: TaskParamType.BROWSER_INSTANCE }],
 }
-
-//02:23:33
