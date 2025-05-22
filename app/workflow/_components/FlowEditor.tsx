@@ -1,9 +1,12 @@
 'use client'
 import { Workflow } from '@prisma/client'
 import {
+	addEdge,
 	Background,
 	BackgroundVariant,
+	Connection,
 	Controls,
+	Edge,
 	ReactFlow,
 	useEdgesState,
 	useNodesState,
@@ -15,9 +18,15 @@ import NodeComponent from './nodes/NodeComponent'
 import { CreateFlowNode } from '@/lib/workflow/createFlowNode'
 import { TaskType } from '@/types/task'
 import { AppNode } from '@/types/appNode'
+import DeletableEdge from './edges/DeletableEdge'
+import { NodeInput } from './nodes/NodeInputs'
 
 const nodeTypes = {
 	FlowScrapeNode: NodeComponent,
+}
+
+const edgeTypes = {
+	default: DeletableEdge,
 }
 
 const snapGrid: [number, number] = [50, 50]
@@ -26,8 +35,8 @@ const fitViewOptions = {
 }
 function FlowEditor({ workflow }: { workflow: Workflow }) {
 	const [nodes, setNodes, onNodesChange] = useNodesState<AppNode>([])
-	const [edges, setEdges, onEdgesChange] = useEdgesState([])
-	const { setViewport, screenToFlowPosition } = useReactFlow()
+	const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([])
+	const { setViewport, screenToFlowPosition, updateNodeData } = useReactFlow()
 
 	useEffect(() => {
 		try {
@@ -61,6 +70,19 @@ function FlowEditor({ workflow }: { workflow: Workflow }) {
 		setNodes((nds) => nds.concat(newNode))
 	}, [])
 
+	const onConnect = useCallback(
+		(connection: Connection) => {
+			setEdges((eds) => addEdge({ ...connection, animated: true }, eds))
+			if (!connection.targetHandle) return
+			//Remove input value if is present on connection
+			const node = nodes.find((node) => node.id === connection.target)
+			if (!node) return
+			const nodeInputs = node.data.inputs
+			delete nodeInputs[connection.targetHandle]
+			updateNodeData(node.id, { inputs: nodeInputs })
+		},
+		[setEdges, updateNodeData]
+	)
 	return (
 		<main className='h-full w-full'>
 			<ReactFlow
@@ -68,13 +90,15 @@ function FlowEditor({ workflow }: { workflow: Workflow }) {
 				edges={edges}
 				onEdgesChange={onEdgesChange}
 				onNodesChange={onNodesChange}
-				nodeTypes={nodeTypes}
-				snapToGrid
-				snapGrid={snapGrid}
-				fitView
-				onDragOver={onDragOver}
 				onDrop={onDrop}
-				fitViewOptions={fitViewOptions}>
+				onConnect={onConnect}
+				nodeTypes={nodeTypes}
+				edgeTypes={edgeTypes}
+				snapGrid={snapGrid}
+				onDragOver={onDragOver}
+				fitViewOptions={fitViewOptions}
+				fitView
+				snapToGrid>
 				<Controls position='top-left' fitViewOptions={fitViewOptions} />
 				<Background variant={BackgroundVariant.Dots} gap={12} size={1} />
 			</ReactFlow>
