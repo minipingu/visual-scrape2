@@ -8,6 +8,8 @@ export const ExtractTextFromElementTask = {
 	icon: (props: LucideProps) => (
 		<TextIcon className='stroke-pink-400' {...props} />
 	),
+	isEntryPoint: false,
+
 	inputs: [
 		{
 			name: 'Html',

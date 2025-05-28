@@ -8,6 +8,8 @@ export const PageToHtmlTask = {
 	icon: (props: LucideProps) => (
 		<CodeIcon className='stroke-pink-400' {...props} />
 	),
+	isEntryPoint: false,
+
 	inputs: [
 		{
 			name: 'Web page',

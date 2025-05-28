@@ -1,12 +1,22 @@
 import { Badge } from '@/components/ui/badge'
 import { TaskRegistry } from '@/lib/workflow/task/registry'
 import { TaskType } from '@/types/task'
-import { CoinsIcon, GripVertical } from 'lucide-react'
+import { CoinsIcon, CopyIcon, GripVertical, TrashIcon } from 'lucide-react'
 import React from 'react'
 import { Button } from '@/components/ui/button'
+import { useReactFlow } from '@xyflow/react'
+import { AppNode } from '../../../../types/appNode'
+import { CreateFlowNode } from '@/lib/workflow/createFlowNode'
 
-const NodeHeader = ({ taskType }: { taskType: TaskType }) => {
+const NodeHeader = ({
+	taskType,
+	nodeId,
+}: {
+	taskType: TaskType
+	nodeId: string
+}) => {
 	const task = TaskRegistry[taskType]
+	const { deleteElements, getNode, addNodes } = useReactFlow()
 	return (
 		<div className='flex items-center gap-2 p-2'>
 			<task.icon size={16} />
@@ -20,6 +30,36 @@ const NodeHeader = ({ taskType }: { taskType: TaskType }) => {
 						<CoinsIcon size={16} />
 						TODO
 					</Badge>
+					{!task.isEntryPoint && (
+						<>
+							<Button
+								variant={'ghost'}
+								size={'icon'}
+								onClick={() => {
+									deleteElements({
+										nodes: [{ id: nodeId }],
+									})
+								}}>
+								<TrashIcon size={12} />
+							</Button>
+							<Button
+								variant={'ghost'}
+								size={'icon'}
+								onClick={() => {
+									const node = getNode(nodeId) as AppNode
+									const newX = node.position.x
+									const newY =
+										node.position.y + node.measured?.height! + 20
+									const newNode = CreateFlowNode(node.data.type, {
+										x: newX,
+										y: newY,
+									})
+									addNodes([newNode])
+								}}>
+								<CopyIcon size={12} />
+							</Button>
+						</>
+					)}
 					<Button
 						className='drag-handle cursor-grab'
 						variant={'ghost'}
