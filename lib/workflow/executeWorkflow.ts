@@ -24,7 +24,7 @@ export async function ExecuteWorkflow(executionId: string) {
 		throw new Error('execution not found')
 	}
 
-	const edges = JSON.parse(execution.workflow.definition).edges as Edge[]
+	const edges = JSON.parse(execution.definition).edges as Edge[]
 
 	const environment: Environment = {
 		phases: {},
