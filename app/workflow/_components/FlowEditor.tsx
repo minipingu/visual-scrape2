@@ -117,7 +117,6 @@ function FlowEditor({ workflow }: { workflow: Workflow }) {
 			const input = targetTask.inputs.find(
 				(o) => o.name === connection.targetHandle
 			)
-			console.log('@@DEBUG', { input, output })
 
 			if (input?.type !== output?.type) {
 				console.error('invalid connection : type mismatch')

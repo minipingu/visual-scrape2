@@ -57,7 +57,6 @@ export async function ExecuteWorkflow(executionId: string) {
 		executionFailed,
 		creditsConsumed
 	)
-
 	await cleanupEnvironment(environment)
 
 	revalidatePath('workflows.runs')
@@ -205,8 +204,6 @@ async function finalizePhase(
 			},
 		},
 	})
-
-	console.log(finalStatus)
 }
 
 async function executePhase(

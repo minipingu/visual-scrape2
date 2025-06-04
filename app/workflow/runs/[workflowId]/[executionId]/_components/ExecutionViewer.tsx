@@ -76,7 +76,6 @@ const ExecutionViewer = ({ initialData }: { initialData: ExecutionData }) => {
 			)[0]
 
 			setSelectedPhase(phaseToSelect.id)
-			console.log('@@PHASEEE', phaseToSelect)
 			return
 		}
 
@@ -92,7 +91,6 @@ const ExecutionViewer = ({ initialData }: { initialData: ExecutionData }) => {
 	)
 	const creditsConsumed = GetPhasesTotalCost(query.data?.phases || [])
 
-	console.log(phaseDetails.data)
 	return (
 		<div className='flex w-full h-full '>
 			<aside className='w-[440px] min-w-[440px] max-w-[440px] border-r-2 border-separate flex flex-grow flex-col overflow-hidden'>

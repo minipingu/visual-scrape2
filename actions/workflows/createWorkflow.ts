@@ -41,9 +41,6 @@ export async function createWorkflow(form: createWorkflowSchemaType) {
 		},
 	})
 
-	console.log(initialFlow)
-	console.log('a')
-
 	if (!result) {
 		throw new Error('failed to create workflow')
 	}
