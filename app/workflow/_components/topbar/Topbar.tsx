@@ -8,7 +8,7 @@ import SaveBtn from './SaveBtn'
 import ExecuteBtn from './ExecuteBtn'
 import NavigationTabs from './NavigationTabs'
 import PublishBtn from './PublishBtn'
-import UnPublishBtn from './unpublishedBtn'
+import UnPublishBtn from './UnpublishedBtn'
 
 interface Props {
 	title: string
