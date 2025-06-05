@@ -14,9 +14,16 @@ interface Props {
 	subtitle?: string
 	workflowId: string
 	hideButtons?: boolean
+	isPublished?: boolean
 }
 
-const TopBar = ({ title, subtitle, workflowId, hideButtons }: Props) => {
+const TopBar = ({
+	title,
+	subtitle,
+	workflowId,
+	hideButtons,
+	isPublished,
+}: Props) => {
 	const router = useRouter()
 	return (
 		<header className='flex p-2 border-b-2 border-separate justify-between w-full h-[60px] sticky top-0 bg-background z-10'>
@@ -43,8 +50,12 @@ const TopBar = ({ title, subtitle, workflowId, hideButtons }: Props) => {
 				{!hideButtons && (
 					<>
 						<ExecuteBtn workflowId={workflowId} />
-						<SaveBtn workflowId={workflowId} />
-						<PublishBtn workflowId={workflowId} />
+						{!isPublished && (
+							<>
+								<SaveBtn workflowId={workflowId} />
+								<PublishBtn workflowId={workflowId} />
+							</>
+						)}
 					</>
 				)}
 			</div>

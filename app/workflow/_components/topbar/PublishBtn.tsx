@@ -15,10 +15,10 @@ const PublishBtn = ({ workflowId }: { workflowId: string }) => {
 	const mutation = useMutation({
 		mutationFn: PublishWorkflow,
 		onSuccess: () => {
-			toast.success('Workflow published', { id: 'workflowId' })
+			toast.success('Workflow published', { id: workflowId })
 		},
 		onError: () => {
-			toast.error('Something went wrong', { id: 'workflowId' })
+			toast.error('Something went wrong', { id: workflowId })
 		},
 	})
 	return (
@@ -32,7 +32,7 @@ const PublishBtn = ({ workflowId }: { workflowId: string }) => {
 					//client side validation!
 					return
 				}
-				toast.loading('publising workflow...', { id: workflowId })
+				toast.loading('publishing workflow...', { id: workflowId })
 				mutation.mutate({
 					id: workflowId,
 					flowDefinition: JSON.stringify(toObject()),
