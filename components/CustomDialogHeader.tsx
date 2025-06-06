@@ -29,7 +29,7 @@ const CustomDialogHeader = (props: Props) => {
 								'text-xl text-primary',
 								props.titleClassName
 							)}>
-							{props.titleClassName}
+							{props.title}
 						</p>
 					)}
 					{props.subTitle && (
